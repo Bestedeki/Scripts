@@ -11,7 +11,7 @@ sudo sed -i '125s/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/c
 #sudo vi /etc/containerd/config.toml     #set SystemdCgroup = true     on line 125  (:se nu)
 sudo systemctl restart containerd
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
-sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"   #modify this line to take the enter input automatically
+echo -ne "/ne" | sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 sudo apt install kubeadm kubelet kubectl kubernetes-cni -y
 sudo swapoff -a
 sudo modprobe br_netfilter
@@ -21,5 +21,4 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Documentation/kube-flannel.yml
-kubectl get pods --all-namespaces
-kubectl get nodes
+kubectl get nodes -A
