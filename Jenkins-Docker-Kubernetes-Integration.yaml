@@ -17,3 +17,8 @@ curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/b
 echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 kubectl version --client
+
+# sudo su - jenkins 
+#create mkdir -p .kube/config in the home directory of the jenkins user
+#login to the K8s master and copy the config file, paste it in the file created above
+# This will enable jenkins to run k8s commands in that cluster
