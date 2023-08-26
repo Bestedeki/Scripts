@@ -1,0 +1,18 @@
+sudo apt-get update
+sudo apt install apt-transport-https curl -y
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install containerd.io
+sudo mkdir -p /etc/containerd
+sudo containerd config default | sudo tee /etc/containerd/config.toml
+sudo sed -i '125s/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+#sudo vi /etc/containerd/config.toml     #set SystemdCgroup = true     on line 125  (:se nu)
+sudo systemctl restart containerd
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+echo -ne "/n" | sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+sudo apt install kubeadm kubelet kubectl kubernetes-cni -y
+sudo swapoff -a
+sudo modprobe br_netfilter
+sudo sysctl -w net.ipv4.ip_forward=1
