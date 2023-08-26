@@ -1,0 +1,32 @@
+#! /bin/bash
+#Create an IAM role with the following rights: AmazonEC2FullAcess, AmazonVPCFullAcess and AmazonS3FullAcess
+#Attach the role to your instance
+
+#Install Kubectl as pre-requisite 
+curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+openssl sha1 -sha256 kubectl
+chmod +x ./kubectl
+mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+kubectl version --short --client
+
+#Installing eksctl:
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+
+#Create your Amazon EKS cluster and nodes:
+#eksctl create cluster --name my-cluster --region region-code --fargate
+eksctl create cluster --name eks --region us-west-2 
+
+#Installing aws-iam-authenticator:
+curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.5.9/aws-iam-authenticator_0.5.9_linux_amd64
+# curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.5.9/aws-iam-authenticator_0.5.9_linux_arm64
+chmod +x ./aws-iam-authenticator
+mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+aws-iam-authenticator help
+
+#Delete your cluster and nodes:
+#eksctl delete cluster --name my-cluster --region region-code
+eksctl delete cluster --name eks --region us-west-2
