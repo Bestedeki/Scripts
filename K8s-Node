@@ -1,3 +1,5 @@
+#i /bin/bash
+
 sudo apt-get update
 sudo apt install apt-transport-https curl -y
 sudo mkdir -p /etc/apt/keyrings
