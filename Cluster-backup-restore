@@ -1,0 +1,15 @@
+#get certs
+cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep etcd
+
+#take a snapshot
+ETCDCTL_API=3 etcdctl snapshot save /tmp/etcd-backup.db
+–cacert /etc/kubernetes/pki/etcd/ca.crt
+–cert /etc/kubernetes/pki/etcd/server.crt
+–key /etc/kubernetes/pki/etcd/server.key
+
+#restore a snapshot
+ETCDCTL_API=3 etcdctl snapshot restore /tmp/etcd-backup.db
+–data-dir /var/lib/etcd-backup
+–cacert /etc/kubernetes/pki/etcd/ca.crt
+–cert /etc/kubernetes/pki/etcd/server.crt
+–key /etc/kubernetes/pki/etcd/server.key
