@@ -12,8 +12,8 @@ sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i '125s/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
 #sudo vi /etc/containerd/config.toml     #set SystemdCgroup = true     on line 125  (:se nu)
 sudo systemctl restart containerd
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
-echo -ne "/n" | sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt install kubeadm kubelet kubectl kubernetes-cni -y
 sudo swapoff -a
 sudo modprobe br_netfilter
