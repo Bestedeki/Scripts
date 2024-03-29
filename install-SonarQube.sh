@@ -1,7 +1,8 @@
 #!/bin/bash
 sudo apt install unzip
-sudo useradd sonarqube
+sudo adduser sonarqube
 sudo echo "sonarqube ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/sonarqube
+# change to sonarqube user
 cd /opt
 sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.4.0.54424.zip
 sudo unzip sonarqube-9.4.0.54424.zip
