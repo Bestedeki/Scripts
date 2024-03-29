@@ -1,0 +1,11 @@
+# Install ArgoCD in a cluster using operator
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.27.0/install.sh | bash -s v0.27.0
+kubectl create -f https://operatorhub.io/install/argocd-operator.yaml
+kubectl get csv -n operators
+# Wait till the csv resource is created 
+Create a file with the following content:
+    apiVersion: argoproj.io/v1alpha1
+    kind: ArgoCD
+    metadata:
+      name: example-argocd
+    spec: {}
