@@ -18,4 +18,6 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 # End of script, change to root user or docker-user
 sudo su -
-docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
+usermod -aG docker ubuntu
+#change to ubuntu user and run the following command
+sudo docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
