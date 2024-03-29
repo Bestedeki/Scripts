@@ -9,3 +9,13 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins
 sudo apt-get update
 # Install Jenkins
 sudo apt-get install jenkins -y
+# Login to Jenkins UI
+# Install docker pipeline
+sudo apt update
+sudo apt install docker.io
+sudo su - 
+usermod -aG docker jenkins
+usermod -aG docker ubuntu
+systemctl restart docker
+# Restart Jenkins using 
+http://<ec2-instance-public-ip>:8080/restart
