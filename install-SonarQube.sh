@@ -1,4 +1,4 @@
-#!/bin/bash
+
 sudo apt install unzip openjdk-11-jre -y
 sudo adduser sonarqube
 sudo echo "sonarqube ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/sonarqube
