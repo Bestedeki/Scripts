@@ -1,10 +1,12 @@
 #!/bin/bash
-
-apt install unzip
-adduser sonarqube
-wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.4.0.54424.zip
-unzip *
-chmod -R 755 ./sonarqube-9.4.0.54424
-chown -R sonarqube:sonarqube ./sonarqube-9.4.0.54424
+sudo apt install unzip
+sudo useradd sonarqube
+sudo echo "sonarqube ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/sonarqube
+cd /opt
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.4.0.54424.zip
+sudo unzip sonarqube-9.4.0.54424.zip
+sudo rm -rf sonarqube-9.4.0.54424.zip
+sudo chmod -R 755 ./sonarqube-9.4.0.54424
+sudo chown -R sonarqube:sonarqube ./sonarqube-9.4.0.54424
 cd sonarqube-9.4.0.54424/bin/linux-x86-64/
-./sonar.sh start
+sh ./sonar.sh start
